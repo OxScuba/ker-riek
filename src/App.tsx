@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { siteConfig } from "./site.config";
 
-const imagePath = (filename: string) => `${import.meta.env.BASE_URL}assets/images/${filename}`;
+const publicPath = (filename: string) => `${import.meta.env.BASE_URL}${filename}`;
+const imagePath = (filename: string) => publicPath(`assets/images/${filename}`);
 
 const services = [
   {
@@ -57,7 +58,7 @@ const faqs = [
   ["Multisig ou passphrase : est-ce toujours plus sûr ?", "Non. Une sécurité trop complexe peut augmenter le risque de perte. Le choix dépend des montants, des personnes impliquées, des lieux de sauvegarde et de la capacité à maintenir le dispositif dans le temps."],
   ["Pouvez-vous me dire combien acheter ?", "Non. Je forme à Bitcoin et j’accompagne les usages techniques. Je ne fournis pas de recommandation personnalisée d’investissement, de rendement ou d’allocation."],
   ["L’accompagnement est-il possible à distance ?", "Oui pour la plupart des besoins. Les interventions auprès de commerces et d’équipes peuvent aussi être organisées sur place autour de Saint-Brieuc et en Bretagne."],
-  ["Comment se déroule le premier échange ?", "Vous réservez gratuitement un créneau de 30 minutes. Cet échange sert à comprendre votre situation, votre niveau et votre objectif, puis à déterminer si un accompagnement est pertinent et sous quelle forme."],
+  ["Comment se déroule le premier échange ?", "Vous réservez un créneau de 30 minutes, sans engagement. Cet échange sert à comprendre votre situation, votre niveau et votre objectif, puis à déterminer si un accompagnement est pertinent et sous quelle forme."],
 ];
 
 function ArrowIcon() {
@@ -211,6 +212,27 @@ export default function App() {
             </picture>
             <figcaption><span /> Un parcours testé avec l’équipe, dans les conditions réelles du comptoir.</figcaption>
           </figure>
+        </section>
+
+        <section className="section flyer-download" id="flyer-commercants">
+          <figure className="flyer-preview">
+            <img src={imagePath("flyer-commercants-preview.webp")} alt="Recto du flyer Kêr Riek destiné aux commerçants" width="900" height="1278" loading="lazy" />
+          </figure>
+          <div className="flyer-copy">
+            <p className="eyebrow"><span /> Ressource commerçant</p>
+            <h2>Le parcours en deux pages, <em>à garder sous la main.</em></h2>
+            <p>Découvrez comment Kêr Riek peut vous accompagner pour encaisser avec Swiss Bitcoin Pay, prendre en main Bull Bitcoin et construire une méthode de conservation adaptée à votre activité.</p>
+            <div className="flyer-meta" aria-label="Caractéristiques du document">
+              <span>Format A5</span>
+              <span>Recto-verso</span>
+              <span>Document PDF</span>
+            </div>
+            <div className="flyer-actions">
+              <a className="button primary" href={publicPath("downloads/flyer-commercants-ker-riek.pdf")} download>Télécharger le flyer PDF <span aria-hidden="true">↓</span></a>
+              <a className="button secondary" href={bookingHref} target="_blank" rel="noreferrer">Réserver un échange de 30 min <ArrowIcon /></a>
+            </div>
+            <small>Le téléchargement contient les deux faces du flyer. Vous pouvez le consulter à l’écran ou l’imprimer en recto-verso.</small>
+          </div>
         </section>
 
         <section className="section method" id="methode">

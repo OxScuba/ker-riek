@@ -75,6 +75,7 @@ L’accompagnement repose sur des limites simples et vérifiables :
 - navigation sur une seule page ;
 - catalogue synthétique des accompagnements ;
 - parcours spécial pour les commerçants ;
+- flyer A5 recto-verso consultable et téléchargeable au format PDF ;
 - méthode d’intervention et engagements de sécurité ;
 - FAQ et cadre d’intervention ;
 - bouton de réservation configurable ;
@@ -147,7 +148,7 @@ dépôt, le premier commit et les différentes méthodes de publication.
 ```text
 .
 ├── .github/workflows/      déploiement GitHub Pages
-├── public/                 identité visuelle, favicons et fichiers statiques
+├── public/                 identité visuelle, téléchargements et fichiers statiques
 ├── src/
 │   ├── App.tsx             contenu et structure de la page
 │   ├── main.tsx            point d’entrée React

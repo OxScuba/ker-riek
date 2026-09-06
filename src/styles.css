@@ -119,6 +119,17 @@ h1 em, h2 em { color: var(--orange); font-weight: 500; }
 .merchant-visual figcaption { display: flex; align-items: flex-start; gap: 10px; padding: 16px 18px; color: rgba(255,255,255,.72); background: #252932; font-size: .8rem; line-height: 1.5; }
 .merchant-visual figcaption span { flex: 0 0 auto; width: 7px; height: 7px; margin-top: 3px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 12px var(--orange); }
 
+.flyer-download { background: #fffdf7; display: grid; grid-template-columns: minmax(280px, .72fr) minmax(0, 1.28fr); align-items: center; gap: clamp(60px, 10vw, 150px); overflow: hidden; }
+.flyer-preview { width: min(100%, 430px); margin: 0; justify-self: center; border: 1px solid var(--line); background: var(--paper); box-shadow: 20px 20px 0 var(--ink); transform: rotate(-1.2deg); }
+.flyer-preview img { display: block; width: 100%; height: auto; }
+.flyer-copy { max-width: 760px; }
+.flyer-copy h2 { font-size: clamp(2.8rem, 5vw, 5rem); }
+.flyer-copy > p:not(.eyebrow) { max-width: 700px; margin: 28px 0; color: var(--muted); font-size: 1rem; line-height: 1.75; }
+.flyer-meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 30px; }
+.flyer-meta span { padding: 8px 10px; border: 1px solid var(--line); font-size: .78rem; font-weight: 750; letter-spacing: .04em; text-transform: uppercase; }
+.flyer-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.flyer-copy > small { display: block; max-width: 650px; margin-top: 20px; color: #70736d; font-size: .78rem; line-height: 1.6; }
+
 .method { background: var(--paper-deep); }
 .steps { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--line); }
 .step { padding: 28px 26px 0 0; margin-right: 26px; border-right: 1px solid var(--line); }
@@ -185,6 +196,7 @@ footer small { grid-column: 1 / -1; padding-top: 25px; border-top: 1px solid rgb
   .service-grid { grid-template-columns: repeat(2, 1fr); }
   .custody { grid-template-columns: 1fr 1fr; gap: 58px; }
   .merchant { grid-template-columns: 1fr 370px; gap: 50px; }
+  .flyer-download { gap: 70px; }
   .steps { grid-template-columns: repeat(3, 1fr); gap: 45px 0; }
   .step:nth-child(3) { border-right: 0; }
   .tool-line { grid-template-columns: repeat(2, 1fr); }
@@ -207,6 +219,8 @@ footer small { grid-column: 1 / -1; padding-top: 25px; border-top: 1px solid rgb
   .custody, .merchant { grid-template-columns: 1fr; }
   .custody-visual { max-width: 720px; }
   .merchant-visual { justify-self: center; }
+  .flyer-download { grid-template-columns: minmax(240px, .7fr) minmax(0, 1.3fr); gap: 45px; }
+  .flyer-preview { box-shadow: 14px 14px 0 var(--ink); }
   .commitment-title h2 { max-width: 650px; }
   .booking-card { max-width: 650px; }
   .regulatory-note { grid-template-columns: 1fr; gap: 9px; }
@@ -227,6 +241,9 @@ footer small { grid-column: 1 / -1; padding-top: 25px; border-top: 1px solid rgb
   .custody-visual picture { box-shadow: -14px 14px 0 var(--orange); }
   .custody-visual figcaption { right: 0; bottom: -32px; }
   .merchant-visual { width: calc(100% - 14px); margin-right: 14px; box-shadow: 14px 16px 0 var(--orange); }
+  .flyer-download { grid-template-columns: 1fr; }
+  .flyer-preview { width: calc(100% - 20px); max-width: 390px; margin-right: 20px; transform: none; }
+  .flyer-actions { flex-direction: column; }
   .booking-card { grid-template-columns: 58px 1fr; gap: 16px; }
   .booking-card > svg { display: none; }
   .calendar-icon { width: 58px; height: 70px; }
