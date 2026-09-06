@@ -1,6 +1,6 @@
 <div align="center">
 
-# Kêr Riek
+<img src="public/assets/images/logo-horizontal.webp" width="460" alt="Kêr Riek" />
 
 ### Accepter, utiliser et sécuriser Bitcoin
 
@@ -69,6 +69,7 @@ L’accompagnement repose sur des limites simples et vérifiables :
 ## ✨ Fonctionnement du site
 
 - présentation responsive adaptée aux ordinateurs, tablettes et mobiles ;
+- identité visuelle complète avec logo, emblème, illustrations et image de partage ;
 - navigation sur une seule page ;
 - catalogue synthétique des accompagnements ;
 - parcours spécial pour les commerçants ;
@@ -144,7 +145,7 @@ dépôt, le premier commit et les différentes méthodes de publication.
 ```text
 .
 ├── .github/workflows/      déploiement GitHub Pages
-├── public/                 fichiers copiés tels quels au build
+├── public/                 identité visuelle, favicons et fichiers statiques
 ├── src/
 │   ├── App.tsx             contenu et structure de la page
 │   ├── main.tsx            point d’entrée React

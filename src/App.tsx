@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { siteConfig } from "./site.config";
 
+const imagePath = (filename: string) => `${import.meta.env.BASE_URL}assets/images/${filename}`;
+
 const services = [
   {
     number: "01",
@@ -81,8 +83,7 @@ export default function App() {
     <>
       <header className="site-header">
         <a className="brand" href="#accueil" aria-label="Kêr Riek, accueil">
-          <span className="brand-mark">₿</span>
-          <span>{siteConfig.brand}</span>
+          <img className="brand-logo" src={imagePath("logo-horizontal.webp")} alt="Kêr Riek" width="900" height="181" />
         </a>
         <button className="menu-button" aria-expanded={menuOpen} aria-controls="navigation" onClick={() => setMenuOpen(!menuOpen)}>
           <span className="sr-only">Ouvrir le menu</span>
@@ -109,27 +110,33 @@ export default function App() {
             </div>
             <p className="location">{siteConfig.area}</p>
           </div>
-          <div className="hero-panel" aria-label="Principes de l’accompagnement">
-            <div className="panel-top">
-              <span>PROTOCOLE D’AUTONOMIE</span>
-              <span className="live-dot">EN PRATIQUE</span>
+          <div className="hero-visual">
+            <picture>
+              <source media="(max-width: 800px)" srcSet={imagePath("domaine-souverain-960.webp")} />
+              <img src={imagePath("domaine-souverain-1600.webp")} alt="Forteresse bretonne ouverte sur la mer, symbole d’un domaine souverain" width="1600" height="1067" fetchPriority="high" />
+            </picture>
+            <div className="hero-panel" aria-label="Principes de l’accompagnement">
+              <div className="panel-top">
+                <span>PROTOCOLE D’AUTONOMIE</span>
+                <span className="live-dot">EN PRATIQUE</span>
+              </div>
+              <div className="proof">
+                <span className="proof-index">01</span>
+                <div><strong>Vos clés</strong><small>restent entre vos mains</small></div>
+                <span className="proof-state">NON-CUSTODIAL</span>
+              </div>
+              <div className="proof">
+                <span className="proof-index">02</span>
+                <div><strong>Chaque geste</strong><small>est compris puis testé</small></div>
+                <span className="proof-state">VÉRIFIÉ</span>
+              </div>
+              <div className="proof">
+                <span className="proof-index">03</span>
+                <div><strong>La complexité</strong><small>reste proportionnée au risque</small></div>
+                <span className="proof-state">SUR MESURE</span>
+              </div>
+              <div className="panel-footer"><ShieldIcon /><span>Pas de seed partagée. Pas de fonds confiés. Pas de dépendance créée.</span></div>
             </div>
-            <div className="proof">
-              <span className="proof-index">01</span>
-              <div><strong>Vos clés</strong><small>restent entre vos mains</small></div>
-              <span className="proof-state">NON-CUSTODIAL</span>
-            </div>
-            <div className="proof">
-              <span className="proof-index">02</span>
-              <div><strong>Chaque geste</strong><small>est compris puis testé</small></div>
-              <span className="proof-state">VÉRIFIÉ</span>
-            </div>
-            <div className="proof">
-              <span className="proof-index">03</span>
-              <div><strong>La complexité</strong><small>reste proportionnée au risque</small></div>
-              <span className="proof-state">SUR MESURE</span>
-            </div>
-            <div className="panel-footer"><ShieldIcon /><span>Pas de seed partagée. Pas de fonds confiés. Pas de dépendance créée.</span></div>
           </div>
         </section>
 
@@ -157,6 +164,26 @@ export default function App() {
           </div>
         </section>
 
+        <section className="section custody">
+          <figure className="custody-visual">
+            <picture>
+              <source media="(max-width: 800px)" srcSet={imagePath("autogarde-960.webp")} />
+              <img src={imagePath("autogarde-1600.webp")} alt="Accompagnement à la prise en main d’un hardware wallet" width="1600" height="1067" loading="lazy" />
+            </picture>
+            <figcaption>Vous gardez le contrôle de chaque manipulation sensible.</figcaption>
+          </figure>
+          <div className="custody-copy">
+            <p className="eyebrow"><span /> Autogarde accompagnée</p>
+            <h2>La sécurité n’est réelle que si vous savez <em>récupérer.</em></h2>
+            <p>Un wallet bien configuré ne suffit pas. Nous construisons ensemble une méthode compréhensible, documentée et testée, adaptée à vos montants, à vos proches ou à votre organisation.</p>
+            <ul>
+              <li><b>01</b><span>Choisir et initialiser le matériel sans exposer vos secrets</span></li>
+              <li><b>02</b><span>Organiser les sauvegardes et les lieux de conservation</span></li>
+              <li><b>03</b><span>Tester la récupération avec un petit montant avant l’usage réel</span></li>
+            </ul>
+          </div>
+        </section>
+
         <section className="section merchant">
           <div className="merchant-copy">
             <p className="eyebrow light"><span /> Spécial commerçants</p>
@@ -169,13 +196,13 @@ export default function App() {
             </ul>
             <a className="text-link" href="#rendez-vous">Étudier mon point de vente <ArrowIcon /></a>
           </div>
-          <div className="payment-demo" aria-label="Exemple de parcours d’encaissement">
-            <div className="demo-kicker">PAIEMENT D’ESSAI</div>
-            <div className="demo-amount">7,80 <sup>€</sup></div>
-            <div className="qr" aria-hidden="true"><span>₿</span></div>
-            <div className="demo-status"><span /> Paiement reçu</div>
-            <div className="demo-meta"><span>Lightning</span><span>Confirmation immédiate</span></div>
-          </div>
+          <figure className="merchant-visual">
+            <picture>
+              <source media="(max-width: 800px)" srcSet={imagePath("commerce-lightning-700.webp")} />
+              <img src={imagePath("commerce-lightning-1000.webp")} alt="Paiement Lightning dans un commerce de proximité" width="1000" height="1250" loading="lazy" />
+            </picture>
+            <figcaption><span /> Un parcours testé avec l’équipe, dans les conditions réelles du comptoir.</figcaption>
+          </figure>
         </section>
 
         <section className="section method" id="methode">
@@ -244,7 +271,7 @@ export default function App() {
             <div className="booking-notes"><span>Sans engagement</span><span>À distance ou sur place</span><span>Besoin cadré avant devis</span></div>
           </div>
           <a className="booking-card" href={bookingHref} target="_blank" rel="noreferrer">
-            <div className="calendar-icon"><span>₿</span><b>RDV</b></div>
+            <div className="calendar-icon"><img src={imagePath("logo-mark.webp")} alt="" /><b>RDV</b></div>
             <div>
               <small>{bookingReady ? "AGENDA EN LIGNE" : "CONTACT DIRECT"}</small>
               <strong>{bookingReady ? "Choisir un créneau" : "Écrire à Scuba Wizard"}</strong>
@@ -261,7 +288,7 @@ export default function App() {
       </main>
 
       <footer>
-        <a className="brand footer-brand" href="#accueil"><span className="brand-mark">₿</span><span>{siteConfig.brand}</span></a>
+        <a className="brand footer-brand" href="#accueil"><span className="footer-mark"><img src={imagePath("logo-mark.webp")} alt="" /></span><span>{siteConfig.brand}</span></a>
         <p>Accepter · utiliser · sécuriser Bitcoin</p>
         <div><a href={siteConfig.xUrl} target="_blank" rel="noreferrer">X / Twitter ↗</a><a href="#cadre">Cadre d’intervention</a><a href="#accueil">Retour en haut ↑</a></div>
         <small>© {new Date().getFullYear()} {siteConfig.brand}. Bitcoin uniquement.</small>
