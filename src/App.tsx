@@ -7,14 +7,14 @@ const services = [
   {
     number: "01",
     title: "Accepter Bitcoin en commerce",
-    text: "Mise en place d’un encaissement simple en euros, sur Lightning ou on-chain, avec Swiss Bitcoin Pay ou une solution adaptée. Configuration, essais réels et procédure pour l’équipe.",
+    text: "Mise en place d’un encaissement simple en euros, via Lightning ou sur le réseau principal, avec Swiss Bitcoin Pay ou une solution adaptée. Configuration, essais réels et procédure pour l’équipe.",
     tags: ["Point de vente", "Lightning", "Suivi des paiements"],
   },
   {
     number: "02",
     title: "Garder ses bitcoins soi-même",
-    text: "Choix et prise en main d’un hardware wallet, création hors ligne, sauvegardes, passphrase si elle est pertinente et exercice complet de récupération.",
-    tags: ["Hardware wallet", "Sauvegardes", "Plan de récupération"],
+    text: "Choix et prise en main d’un portefeuille matériel, création hors ligne, sauvegardes, passphrase si elle est pertinente et exercice complet de récupération.",
+    tags: ["Portefeuille matériel", "Sauvegardes", "Plan de récupération"],
   },
   {
     number: "03",
@@ -25,13 +25,13 @@ const services = [
   {
     number: "04",
     title: "Comprendre et utiliser Bitcoin",
-    text: "Wallet, adresses, frais, transactions, Lightning, UTXO et bonnes pratiques de confidentialité : une formation construite autour de votre usage réel.",
+    text: "Portefeuilles, adresses, frais, transactions, Lightning, UTXO et bonnes pratiques de confidentialité : une formation construite autour de votre usage réel.",
     tags: ["Débutants", "Transactions", "Autonomie"],
   },
   {
     number: "05",
     title: "Prendre en main une plateforme",
-    text: "Accompagnement technique sur une plateforme choisie par le client, notamment Bull Bitcoin : création du compte, compréhension de l’interface et retrait vers son propre wallet.",
+    text: "Accompagnement technique sur une plateforme choisie par le client, notamment Bull Bitcoin : création du compte, compréhension de l’interface et retrait vers son propre portefeuille.",
     tags: ["Achat / vente", "Retrait", "Vous restez aux commandes"],
   },
   {
@@ -53,10 +53,11 @@ const steps = [
 const faqs = [
   ["Dois-je déjà connaître Bitcoin ?", "Non. L’accompagnement part de votre niveau et de votre usage. L’objectif n’est pas de vous noyer dans la technique, mais de vous rendre autonome."],
   ["Faut-il acheter un terminal de paiement ?", "Pas nécessairement. Pour un petit commerce, un smartphone ou une tablette peut suffire. Les besoins d’une boutique en ligne ou de plusieurs points de vente demandent une architecture différente."],
-  ["Aurez-vous accès à mes bitcoins ou à mes mots de sauvegarde ?", "Jamais. Je ne demande, ne photographie, ne saisis et ne conserve aucune seed, passphrase, clé privée, code PIN ou moyen d’accès. Vous effectuez vous-même les manipulations sensibles."],
+  ["Aurez-vous accès à mes bitcoins ou à ma phrase de récupération ?", "Jamais. Je ne demande, ne photographie, ne saisis et ne conserve aucune phrase de récupération, passphrase, clé privée, code PIN ou moyen d’accès. Vous effectuez vous-même les manipulations sensibles."],
   ["Multisig ou passphrase : est-ce toujours plus sûr ?", "Non. Une sécurité trop complexe peut augmenter le risque de perte. Le choix dépend des montants, des personnes impliquées, des lieux de sauvegarde et de la capacité à maintenir le dispositif dans le temps."],
   ["Pouvez-vous me dire combien acheter ?", "Non. Je forme à Bitcoin et j’accompagne les usages techniques. Je ne fournis pas de recommandation personnalisée d’investissement, de rendement ou d’allocation."],
   ["L’accompagnement est-il possible à distance ?", "Oui pour la plupart des besoins. Les interventions auprès de commerces et d’équipes peuvent aussi être organisées sur place autour de Saint-Brieuc et en Bretagne."],
+  ["Comment se déroule le premier échange ?", "Vous réservez gratuitement un créneau de 30 minutes. Cet échange sert à comprendre votre situation, votre niveau et votre objectif, puis à déterminer si un accompagnement est pertinent et sous quelle forme."],
 ];
 
 function ArrowIcon() {
@@ -72,8 +73,15 @@ export default function App() {
 
   useEffect(() => {
     const close = () => setMenuOpen(false);
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
     window.addEventListener("hashchange", close);
-    return () => window.removeEventListener("hashchange", close);
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      window.removeEventListener("hashchange", close);
+      window.removeEventListener("keydown", closeOnEscape);
+    };
   }, []);
 
   const bookingReady = Boolean(siteConfig.bookingUrl);
@@ -86,7 +94,7 @@ export default function App() {
           <img className="brand-logo" src={imagePath("logo-horizontal.webp")} alt="Kêr Riek" width="900" height="181" />
         </a>
         <button className="menu-button" aria-expanded={menuOpen} aria-controls="navigation" onClick={() => setMenuOpen(!menuOpen)}>
-          <span className="sr-only">Ouvrir le menu</span>
+          <span className="sr-only">{menuOpen ? "Fermer" : "Ouvrir"} le menu</span>
           <span /><span />
         </button>
         <nav id="navigation" className={menuOpen ? "nav open" : "nav"} aria-label="Navigation principale">
@@ -94,7 +102,7 @@ export default function App() {
           <a href="#methode">Méthode</a>
           <a href="#engagements">Engagements</a>
           <a href="#questions">Questions</a>
-          <a className="nav-cta" href="#rendez-vous">Prendre rendez-vous</a>
+          <a className="nav-cta" href={bookingHref} target="_blank" rel="noreferrer" aria-label="Réserver un premier échange de 30 minutes sur Cal.com">Réserver 30 min</a>
         </nav>
       </header>
 
@@ -102,10 +110,10 @@ export default function App() {
         <section className="hero" id="accueil">
           <div className="hero-copy">
             <p className="eyebrow"><span /> Accompagnement Bitcoin pratique et indépendant</p>
-            <h1>De la théorie à un Bitcoin <em>qui fonctionne pour vous.</em></h1>
-            <p className="hero-lead">J’aide commerçants, entreprises et particuliers à accepter, utiliser et sécuriser Bitcoin — avec pédagogie, sans jargon et sans jamais prendre le contrôle de leurs fonds.</p>
+            <h1>Acceptez, utilisez et sécurisez Bitcoin. <em>Gardez-en le contrôle.</em></h1>
+            <p className="hero-lead">Que vous soyez commerçant, entreprise ou particulier, je vous accompagne du premier paiement à l’autogarde avancée — avec une méthode claire, testée et sans jamais accéder à vos fonds.</p>
             <div className="hero-actions">
-              <a className="button primary" href="#rendez-vous">Parler de mon besoin <ArrowIcon /></a>
+              <a className="button primary" href={bookingHref} target="_blank" rel="noreferrer">Réserver un échange de 30 min <ArrowIcon /></a>
               <a className="button secondary" href="#accompagnements">Découvrir les accompagnements</a>
             </div>
             <p className="location">{siteConfig.area}</p>
@@ -123,7 +131,7 @@ export default function App() {
               <div className="proof">
                 <span className="proof-index">01</span>
                 <div><strong>Vos clés</strong><small>restent entre vos mains</small></div>
-                <span className="proof-state">NON-CUSTODIAL</span>
+                <span className="proof-state">SANS GARDE</span>
               </div>
               <div className="proof">
                 <span className="proof-index">02</span>
@@ -135,7 +143,7 @@ export default function App() {
                 <div><strong>La complexité</strong><small>reste proportionnée au risque</small></div>
                 <span className="proof-state">SUR MESURE</span>
               </div>
-              <div className="panel-footer"><ShieldIcon /><span>Pas de seed partagée. Pas de fonds confiés. Pas de dépendance créée.</span></div>
+              <div className="panel-footer"><ShieldIcon /><span>Pas de phrase de récupération partagée. Pas de fonds confiés. Pas de dépendance créée.</span></div>
             </div>
           </div>
         </section>
@@ -168,14 +176,14 @@ export default function App() {
           <figure className="custody-visual">
             <picture>
               <source media="(max-width: 800px)" srcSet={imagePath("autogarde-960.webp")} />
-              <img src={imagePath("autogarde-1600.webp")} alt="Accompagnement à la prise en main d’un hardware wallet" width="1600" height="1067" loading="lazy" />
+              <img src={imagePath("autogarde-1600.webp")} alt="Accompagnement à la prise en main d’un portefeuille matériel" width="1600" height="1067" loading="lazy" />
             </picture>
             <figcaption>Vous gardez le contrôle de chaque manipulation sensible.</figcaption>
           </figure>
           <div className="custody-copy">
             <p className="eyebrow"><span /> Autogarde accompagnée</p>
             <h2>La sécurité n’est réelle que si vous savez <em>récupérer.</em></h2>
-            <p>Un wallet bien configuré ne suffit pas. Nous construisons ensemble une méthode compréhensible, documentée et testée, adaptée à vos montants, à vos proches ou à votre organisation.</p>
+            <p>Un portefeuille bien configuré ne suffit pas. Nous construisons ensemble une méthode compréhensible, documentée et testée, adaptée à vos montants, à vos proches ou à votre organisation.</p>
             <ul>
               <li><b>01</b><span>Choisir et initialiser le matériel sans exposer vos secrets</span></li>
               <li><b>02</b><span>Organiser les sauvegardes et les lieux de conservation</span></li>
@@ -187,14 +195,14 @@ export default function App() {
         <section className="section merchant">
           <div className="merchant-copy">
             <p className="eyebrow light"><span /> Spécial commerçants</p>
-            <h2>Encaisser un paiement Bitcoin peut être aussi simple qu’afficher un QR code.</h2>
-            <p>Nous configurons ensemble le parcours complet : montant saisi en euros, facture Lightning ou on-chain, confirmation du paiement, destination des fonds et suivi utile à la comptabilité.</p>
+            <h2>Encaisser un paiement Bitcoin peut tenir en quelques gestes.</h2>
+            <p>Nous configurons ensemble le parcours complet : montant saisi en euros, QR code Lightning ou sur le réseau principal, confirmation du paiement, destination des fonds et suivi utile à la comptabilité.</p>
             <ul>
               <li><b>01</b> Choisir entre conservation en bitcoin et conversion selon le service retenu</li>
               <li><b>02</b> Tester avec l’équipe dans les conditions réelles du comptoir</li>
               <li><b>03</b> Préparer une procédure courte pour les ventes, remboursements et contrôles</li>
             </ul>
-            <a className="text-link" href="#rendez-vous">Étudier mon point de vente <ArrowIcon /></a>
+            <a className="text-link" href="#rendez-vous">Évaluer mon point de vente <ArrowIcon /></a>
           </div>
           <figure className="merchant-visual">
             <picture>
@@ -228,7 +236,7 @@ export default function App() {
           </div>
           <div className="commitment-list">
             <div><strong>01</strong><p><b>Aucune garde</b><br />Vos bitcoins ne transitent jamais par moi.</p></div>
-            <div><strong>02</strong><p><b>Aucun secret confié</b><br />Seeds, passphrases et PIN ne sont ni vus ni conservés.</p></div>
+            <div><strong>02</strong><p><b>Aucun secret confié</b><br />Phrases de récupération, passphrases et codes PIN ne sont ni vus ni conservés.</p></div>
             <div><strong>03</strong><p><b>Aucune promesse</b><br />Pas de trading, de rendement annoncé ou de pari sur le prix.</p></div>
             <div><strong>04</strong><p><b>Aucune dépendance</b><br />La documentation et les tests visent votre autonomie.</p></div>
           </div>
@@ -238,7 +246,7 @@ export default function App() {
           <div className="section-heading compact">
             <p className="eyebrow"><span /> Des outils choisis, jamais imposés</p>
             <h2>Le bon dispositif dépend <em>du bon diagnostic.</em></h2>
-            <p>Selon le contexte : solution de paiement prête à l’emploi, BTCPay Server, wallet mobile, hardware wallet Bitcoin-only, Sparrow, passphrase ou multisig. La simplicité reste une propriété de sécurité.</p>
+            <p>Selon le contexte : solution de paiement prête à l’emploi, BTCPay Server, portefeuille mobile, portefeuille matériel Bitcoin-only, Sparrow, passphrase ou multisig. La simplicité reste une propriété de sécurité.</p>
           </div>
           <div className="tool-line" aria-label="Exemples d’outils">
             <a href="https://swiss-bitcoin-pay.ch/" target="_blank" rel="noreferrer">Swiss Bitcoin Pay <span>↗</span></a>
@@ -266,16 +274,16 @@ export default function App() {
         <section className="booking" id="rendez-vous">
           <div>
             <p className="eyebrow light"><span /> Premier échange</p>
-            <h2>Parlons de votre usage, <em>pas d’un produit à vous vendre.</em></h2>
-            <p>Choisissez un créneau pour un premier échange. Nous clarifierons le besoin, le périmètre et la meilleure prochaine étape.</p>
-            <div className="booking-notes"><span>Sans engagement</span><span>À distance ou sur place</span><span>Besoin cadré avant devis</span></div>
+            <h2>Commençons par votre besoin, <em>pas par un produit.</em></h2>
+            <p>Réservez 30 minutes pour me présenter votre situation. Nous clarifierons votre objectif, le périmètre utile et la meilleure prochaine étape.</p>
+            <div className="booking-notes"><span>30 minutes</span><span>Sans engagement</span><span>Besoin cadré avant devis</span></div>
           </div>
           <a className="booking-card" href={bookingHref} target="_blank" rel="noreferrer">
             <div className="calendar-icon"><img src={imagePath("logo-mark.webp")} alt="" /><b>RDV</b></div>
             <div>
               <small>{bookingReady ? "AGENDA EN LIGNE" : "CONTACT DIRECT"}</small>
-              <strong>{bookingReady ? "Choisir un créneau" : "Écrire à Scuba Wizard"}</strong>
-              <p>{bookingReady ? "Consultez les disponibilités et réservez l’horaire qui vous convient." : "L’agenda sera connecté avant la mise en ligne. En attendant, contactez-moi sur X."}</p>
+              <strong>{bookingReady ? "Réserver mon premier échange" : "Écrire à Scuba Wizard"}</strong>
+              <p>{bookingReady ? "Consultez les disponibilités sur Cal.com et choisissez l’horaire qui vous convient." : "L’agenda sera connecté avant la mise en ligne. En attendant, contactez-moi sur X."}</p>
             </div>
             <ArrowIcon />
           </a>
@@ -290,7 +298,7 @@ export default function App() {
       <footer>
         <a className="brand footer-brand" href="#accueil"><span className="footer-mark"><img src={imagePath("logo-mark.webp")} alt="" /></span><span>{siteConfig.brand}</span></a>
         <p>Accepter · utiliser · sécuriser Bitcoin</p>
-        <div><a href={siteConfig.xUrl} target="_blank" rel="noreferrer">X / Twitter ↗</a><a href="#cadre">Cadre d’intervention</a><a href="#accueil">Retour en haut ↑</a></div>
+        <div><a href={siteConfig.bookingUrl} target="_blank" rel="noreferrer">Réserver un échange ↗</a><a href={siteConfig.xUrl} target="_blank" rel="noreferrer">X / Twitter ↗</a><a href="#cadre">Cadre d’intervention</a><a href="#accueil">Retour en haut ↑</a></div>
         <small>© {new Date().getFullYear()} {siteConfig.brand}. Bitcoin uniquement.</small>
       </footer>
     </>

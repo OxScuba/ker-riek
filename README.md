@@ -13,6 +13,8 @@
 
 [Ouvrir le site](https://oxscuba.github.io/ker-riek/)
 ·
+[Réserver un premier échange](https://cal.com/scuba-wizard/ker-reik-premier-echange)
+·
 [Découvrir les accompagnements](#-les-accompagnements)
 ·
 [Lancer le projet](#-développement-local)
@@ -114,15 +116,15 @@ Les informations destinées à être modifiées sont regroupées dans
 ```ts
 export const siteConfig = {
   brand: "Kêr Riek",
-  bookingUrl: "",
+  bookingUrl: "https://cal.com/scuba-wizard/ker-reik-premier-echange",
   xUrl: "https://x.com/Scuba_Wizard",
   area: "Saint-Brieuc, Bretagne · accompagnement à distance partout en France",
 };
 ```
 
-Pour activer la réservation, renseigner dans `bookingUrl` l’adresse publique du
-calendrier choisi. Ne jamais placer de clé d’API, de jeton ou d’identifiant privé
-dans ce fichier.
+Le lien public de réservation Cal.com est renseigné dans `bookingUrl`. Il peut
+être remplacé par une autre adresse publique sans modifier le reste du site.
+Ne jamais placer de clé d’API, de jeton ou d’identifiant privé dans ce fichier.
 
 ## 🌐 Déploiement GitHub Pages
 
